@@ -11,12 +11,11 @@ class MainFrame;
 class ListManager
 {
 public:
-	ListManager(MainFrame* mainFrame);
+	ListManager(MainFrame* mainFrame, wxString savePath);
 
 	List* getCurrentList() { return m_CurrentList; }
 
-	int LoadFromFile(std::string path);
-
+	void saveToFile();
 private:
 	MainFrame* m_MainFrame;
 

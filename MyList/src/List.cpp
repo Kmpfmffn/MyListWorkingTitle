@@ -19,9 +19,9 @@ List::List(MainFrame* mainFrame, wxString title)
 
 
 	// temporary for development (needs to be read from save later)
-	for (int i = 0; i < 11; i++) {
+	/*for (int i = 0; i < 11; i++) {
 		m_Elements.push_back(new ListElement(this, wxString::Format("Item %d", i)));
-	}
+	}*/
 	// temporary
 
 

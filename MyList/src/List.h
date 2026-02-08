@@ -11,6 +11,7 @@ class List : public wxScrolledWindow
 public:
 	List(MainFrame* mainFrame, wxString title);
 
+	MainFrame* getMainFrame() { return m_MainFrame; }
 	wxBoxSizer* getListSizer() { return m_ListSizer; }
 
 	bool addElement(wxString title, Status status = Status::UNDONE);

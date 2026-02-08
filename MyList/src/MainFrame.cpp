@@ -23,6 +23,7 @@ MainFrame::MainFrame()
 	: wxFrame(nullptr, wxID_ANY, "MyListApp", wxDefaultPosition, mfnWINDOW_SIZE)
 {
 	SetMinClientSize(wxSize(mfnWINDOW_WIDTH/2, mfnWINDOW_HEIGHT/2));
+	SetStatusBar(new wxStatusBar(this, wxID_ANY));
 
 	// MenuBar
 	wxMenuBar* menuBar = new wxMenuBar();
@@ -53,7 +54,8 @@ MainFrame::MainFrame()
 
 	m_MainPanel = new wxPanel(this, wxID_ANY);
 	m_MainSizer = new wxBoxSizer(wxVERTICAL);
-	m_ListManager = new ListManager(this);
+	m_ListManager = new ListManager(this, mfnDEFAULT_SAVE_PATH);
+	m_ListManager->loadFromFile(mfnDEFAULT_SAVE_PATH);
 	m_MainPanel->SetBackgroundColour(mfnPRIMARY_BACKGROUND_COLOUR);
 
 

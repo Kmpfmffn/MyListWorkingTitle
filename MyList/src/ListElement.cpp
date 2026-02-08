@@ -1,6 +1,7 @@
 #include "ListElement.h"
 #include "Constants.h"
 
+#include "MainFrame.h"
 #include "List.h"
 
 
@@ -18,9 +19,12 @@ ListElement::ListElement(List* list, wxString title, Status status)
 	wxBoxSizer* elementSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// everything rendered inside the ListElement
-	wxButton* checkboxButton = new wxButton(this, wxID_ANY, m_Title, wxPoint(-1, -1), wxSize(elemHeight, elemHeight));
-	checkboxButton->Bind(wxEVT_BUTTON, [=](wxCommandEvent& evt) { m_List->addElement("new Element"); });
-	elementSizer->Add(checkboxButton, wxSizerFlags().Border(wxALL, 2));
+	m_ToggleButton = new wxButton(this, wxID_ANY, UNICODE_CHECKBOX_UNCHECKED, wxDefaultPosition, wxSize(elemHeight, elemHeight));
+	m_ToggleButton->SetFont(m_ToggleButton->GetFont().Scale(3));
+	if (m_Status == Status::DONE)
+		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_CHECKED);
+	m_ToggleButton->Bind(wxEVT_BUTTON, &ListElement::onToggleStatus, this);
+	elementSizer->Add(m_ToggleButton, wxSizerFlags().Border(wxALL, 2));
 
 	wxStaticText* titleST = new wxStaticText(this, wxID_ANY, m_Title);
 	titleST->SetForegroundColour(mfnSECONDARY_TEXT_COLOUR);
@@ -39,4 +43,19 @@ ListElement::ListElement(List* list, wxString title, Status status)
 	this->SetSizer(elementSizer);
 	elementSizer->SetSizeHints(this);
 	m_List->getListSizer()->Add(this, wxSizerFlags().Border(wxALL, 3).Expand());
+}
+
+void ListElement::toggleStatus() {
+	if (m_Status == Status::DONE)
+		m_Status = Status::UNDONE;
+	else
+		m_Status = Status::DONE;
+}
+
+void ListElement::onToggleStatus(wxCommandEvent& evt) {
+	this->toggleStatus();
+	if (m_Status == Status::DONE)
+		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_CHECKED);
+	else
+		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_UNCHECKED);
 }
