@@ -13,8 +13,11 @@ public:
 
 	MainFrame* getMainFrame() { return m_MainFrame; }
 	wxBoxSizer* getListSizer() { return m_ListSizer; }
+	wxString getTitle() { return m_Title; }
+	std::vector<ListElement*> getElements() { return m_Elements; }
 
 	bool addElement(wxString title, Status status = Status::UNDONE);
+	bool removeElement(ListElement* element);
 private:
 	MainFrame* m_MainFrame;
 	wxBoxSizer* m_ListSizer;

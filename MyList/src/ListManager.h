@@ -12,6 +12,7 @@ class ListManager
 {
 public:
 	ListManager(MainFrame* mainFrame, wxString savePath);
+	~ListManager();
 
 	List* getCurrentList() { return m_CurrentList; }
 
@@ -21,8 +22,7 @@ private:
 
 	List* m_CurrentList;
 
-	std::string m_Path;
+	wxString m_Path;
 	std::vector<List*> m_Lists;
-	//std::vector<Folder*> m_Folder;
 };
 

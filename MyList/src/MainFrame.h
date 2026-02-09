@@ -1,7 +1,6 @@
 #pragma once
 
 #include <wx/wx.h>
-#include <wx/popupwin.h>
 
 class ListManager;
 
@@ -16,6 +15,7 @@ public:
 
 	wxPanel* getMainPanel() { return m_MainPanel; }
 	wxBoxSizer* getMainSizer() { return m_MainSizer; }
+	ListManager* getListManager() { return m_ListManager; }
 private:
 	wxPanel* m_MainPanel;
 	wxBoxSizer* m_MainSizer;

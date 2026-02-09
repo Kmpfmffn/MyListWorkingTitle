@@ -41,14 +41,33 @@ ListManager::ListManager(MainFrame* mainFrame, wxString savePath)
 	// Save file loading or creation
 
 
-
-	m_Lists.push_back(new List(m_MainFrame, "list0"));
-	m_Lists.push_back(new List(m_MainFrame, "list1"));
-
 	m_CurrentList = m_Lists[0];
 	m_CurrentList->Show();
 }
 
-void ListManager::saveToFile() {
+ListManager::~ListManager() {
+	saveToFile();
+}
 
+
+/* Save file format
+#VERSION(version)
+LIST(title)
+ELEM(title,status)
+[...]
+ELEM(title,status)
+LIST(title)
+[...]
+*/
+void ListManager::saveToFile() {
+	std::ofstream file(m_Path.ToStdString());
+
+	file << "#VERSION(0.0.1)" << std::endl;
+	for (auto list : m_Lists) {
+		file << "LIST(" << list->getTitle().c_str() << ")" << std::endl;
+		for (auto element : list->getElements()) {
+			file << "ELEM(" << element->getTitle() << "," << (element->getStatus() == Status::UNDONE ? "0" : "1") << ")" << std::endl;
+		}
+	}
+	file.close();
 }

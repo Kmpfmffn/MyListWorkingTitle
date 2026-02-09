@@ -29,10 +29,11 @@ MainFrame::MainFrame()
 	wxMenuBar* menuBar = new wxMenuBar();
 	wxMenu* fileMenu = new wxMenu();
 	fileMenu->Append(wxID_LOAD, "&Load list\tCtrl+l");
+	fileMenu->Append(wxID_SAVE, "&Save\tCtrl+s");
 	fileMenu->AppendSeparator();
 
-	fileMenu->Append(wxID_NEW_LIST, "&New List\tCtrl+Shift+n");
 	fileMenu->Append(wxID_NEW_ELEMENT, "&New Element\tCtrl+n");
+	fileMenu->Append(wxID_NEW_LIST, "&New List\tCtrl+Shift+n");
 	fileMenu->AppendSeparator();
 
 	fileMenu->Append(wxID_EXIT, "&Exit\tEsc");
@@ -41,12 +42,13 @@ MainFrame::MainFrame()
 
 	// Bind MenuBar Events
 	Bind(wxEVT_MENU, [&](wxCommandEvent& evt) {
-		wxMessageBox("Create new list here!"); 
-		}, wxID_NEW_LIST);
-	Bind(wxEVT_MENU, [&](wxCommandEvent& evt) {
 		onMenuNewElement();
 		}, wxID_NEW_ELEMENT);
+	Bind(wxEVT_MENU, [&](wxCommandEvent& evt) {
+		wxMessageBox("Create new list here!"); 
+		}, wxID_NEW_LIST);
 	Bind(wxEVT_MENU, [&](wxCommandEvent& evt) { wxMessageBox("Load list here!"); }, wxID_LOAD);
+	Bind(wxEVT_MENU, [&](wxCommandEvent& evt) { m_ListManager->saveToFile(); }, wxID_SAVE);
 	Bind(wxEVT_MENU, [&](wxCommandEvent& evt) { Close(true); }, wxID_EXIT);
 
 	// Key bindings
@@ -55,7 +57,6 @@ MainFrame::MainFrame()
 	m_MainPanel = new wxPanel(this, wxID_ANY);
 	m_MainSizer = new wxBoxSizer(wxVERTICAL);
 	m_ListManager = new ListManager(this, mfnDEFAULT_SAVE_PATH);
-	m_ListManager->loadFromFile(mfnDEFAULT_SAVE_PATH);
 	m_MainPanel->SetBackgroundColour(mfnPRIMARY_BACKGROUND_COLOUR);
 
 
@@ -63,6 +64,14 @@ MainFrame::MainFrame()
 	m_MainSizer->FitInside(m_MainPanel);
 }
 
+
+static bool checkNewElementTitle(wxString title) {
+	if (title.find(",") != std::string::npos) {
+		wxMessageBox("Invalid title.\nNot allowed are: ','");
+		return false;
+	}
+	return true;
+}
 
 void MainFrame::onKeyPress(wxKeyEvent& evt) {
 	evt.Skip();
@@ -76,6 +85,8 @@ void MainFrame::onMenuNewElement() {
 	wxTextCtrl* titleTC = new wxTextCtrl(dialog, wxID_ANY, "New item", wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	titleTC->SetMinSize(wxSize(300, -1));
 	titleTC->Bind(wxEVT_TEXT_ENTER, [=](wxCommandEvent& evt) {
+		if (!checkNewElementTitle(titleTC->GetValue()))
+			return;
 		m_ListManager->getCurrentList()->addElement(titleTC->GetValue());
 		dialog->Destroy();
 		});
@@ -93,6 +104,8 @@ void MainFrame::onMenuNewElement() {
 
 	wxButton* btnAdd = new wxButton(btnPanel, wxID_ANY, "ADD");
 	btnAdd->Bind(wxEVT_BUTTON, [=](wxCommandEvent& evt) { 
+		if (!checkNewElementTitle(titleTC->GetValue()))
+			return;
 		m_ListManager->getCurrentList()->addElement(titleTC->GetValue());
 		dialog->Destroy();
 		});

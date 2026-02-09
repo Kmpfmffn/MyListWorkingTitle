@@ -4,6 +4,8 @@
 #include "MainFrame.h"
 #include "List.h"
 
+#include <algorithm>
+
 
 int elemWidth = 300;
 int elemHeight = 50;
@@ -32,7 +34,7 @@ ListElement::ListElement(List* list, wxString title, Status status)
 	elementSizer->Add(titleST, wxSizerFlags(1).CenterVertical().Border(wxLEFT, 5));
 
 	wxButton* deleteButton = new wxButton(this, wxID_ANY, "X", wxDefaultPosition, wxSize(elemHeight, elemHeight));
-	deleteButton->Bind(wxEVT_BUTTON, [=](wxCommandEvent& evt) { List* list = m_List; this->Destroy(); list->Layout(); list->FitInside(); });
+	deleteButton->Bind(wxEVT_BUTTON, &ListElement::onDelete, this);
 	deleteButton->SetBackgroundColour(*wxRED);
 	deleteButton->SetForegroundColour(*wxBLACK);
 	deleteButton->SetFont(deleteButton->GetFont().Scale(2.3f).Bold());
@@ -58,4 +60,12 @@ void ListElement::onToggleStatus(wxCommandEvent& evt) {
 		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_CHECKED);
 	else
 		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_UNCHECKED);
+}
+
+void ListElement::onDelete(wxCommandEvent& evt) {
+	List* list = m_List;
+	list->removeElement(this);
+	this->Destroy();
+	list->Layout();
+	list->FitInside();
 }

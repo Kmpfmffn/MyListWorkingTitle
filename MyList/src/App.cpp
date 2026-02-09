@@ -1,4 +1,5 @@
 #include "App.h"
+#include "ListManager.h"
 
 //#include "../resource.h"
 
@@ -10,8 +11,9 @@
 
 wxIMPLEMENT_APP(App);
 
-bool App::OnInit() {
-	MainFrame* mainFrame = new MainFrame();
+bool App::OnInit()
+{
+	m_MainFrame = new MainFrame();
 	//mainFrame->SetIcon(wxICON(appicon));
 
 	//// Set Icons to the window and task bar
@@ -28,8 +30,8 @@ bool App::OnInit() {
 
 
 
-	mainFrame->Center();
-	mainFrame->Show(true);
+	m_MainFrame->Center();
+	m_MainFrame->Show(true);
 	return true;
 }
 

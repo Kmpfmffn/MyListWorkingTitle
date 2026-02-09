@@ -3,6 +3,8 @@
 
 #include "MainFrame.h"
 
+class ListManager;
+
 class App : public wxApp
 {
 public:
@@ -10,4 +12,6 @@ public:
 
 	App();
 	~App();
+private:
+	MainFrame* m_MainFrame;
 };

@@ -17,14 +17,6 @@ List::List(MainFrame* mainFrame, wxString title)
 	m_TitleLabel->SetFont(m_TitleLabel->GetFont().Scale(2));
 	m_ListSizer->Add(m_TitleLabel, wxSizerFlags().Expand().Border(wxALL, 2));
 
-
-	// temporary for development (needs to be read from save later)
-	/*for (int i = 0; i < 11; i++) {
-		m_Elements.push_back(new ListElement(this, wxString::Format("Item %d", i)));
-	}*/
-	// temporary
-
-
 	this->SetSizer(m_ListSizer);
 	SetScrollRate(0, 9);
 	m_ListSizer->FitInside(this);
@@ -38,4 +30,11 @@ bool List::addElement(wxString title, Status status) {
 	Layout();
 	FitInside();
 	return 1;
+}
+
+bool List::removeElement(ListElement* element) {
+	m_Elements.erase(std::find(m_Elements.begin(), m_Elements.end(), element));
+
+
+	return true;
 }
