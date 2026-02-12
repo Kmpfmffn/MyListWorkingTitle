@@ -2,6 +2,7 @@
 #include "Constants.h"
 
 #include "MainFrame.h"
+#include "ListManager.h"
 #include "List.h"
 
 #include <algorithm>
@@ -12,7 +13,7 @@ int elemHeight = 50;
 wxSize elemSize(elemWidth, elemHeight);
 
 ListElement::ListElement(List* list, wxString title, Status status)
-	: wxPanel(list, wxID_ANY),
+	: wxPanel(list->getListPanel(), wxID_ANY, wxDefaultPosition, wxDefaultSize, 2621440L, "MainListElementPanel"),
 	  m_List(list),
 	  m_Title(title), m_Status(status)
 {
@@ -60,6 +61,8 @@ void ListElement::onToggleStatus(wxCommandEvent& evt) {
 		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_CHECKED);
 	else
 		m_ToggleButton->SetLabel(UNICODE_CHECKBOX_UNCHECKED);
+
+	m_List->getMainFrame()->getListManager()->saveToFile();
 }
 
 void ListElement::onDelete(wxCommandEvent& evt) {
@@ -68,4 +71,5 @@ void ListElement::onDelete(wxCommandEvent& evt) {
 	this->Destroy();
 	list->Layout();
 	list->FitInside();
+	list->getMainFrame()->getListManager()->saveToFile(); // saves the List
 }

@@ -88,6 +88,7 @@ void MainFrame::onMenuNewElement() {
 		if (!checkNewElementTitle(titleTC->GetValue()))
 			return;
 		m_ListManager->getCurrentList()->addElement(titleTC->GetValue());
+		m_ListManager->saveToFile();
 		dialog->Destroy();
 		});
 	dialogSizer->Add(titleTC, wxSizerFlags(1).CenterHorizontal().Border(wxALL, 5));
@@ -107,6 +108,7 @@ void MainFrame::onMenuNewElement() {
 		if (!checkNewElementTitle(titleTC->GetValue()))
 			return;
 		m_ListManager->getCurrentList()->addElement(titleTC->GetValue());
+		m_ListManager->saveToFile();
 		dialog->Destroy();
 		});
 	btnSizer->Add(btnAdd, wxSizerFlags(1).Expand().Border(wxLEFT, 2));

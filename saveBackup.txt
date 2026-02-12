@@ -1,0 +1,6 @@
+#VERSION(0.0.1)
+LIST(TODO diese Woche)
+ELEM(elem0,0)
+ELEM(elem1,0)
+ELEM(elem2,1)
+ELEM(Deine Mama anrufen,0)

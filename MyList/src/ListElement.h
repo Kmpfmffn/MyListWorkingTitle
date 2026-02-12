@@ -3,6 +3,7 @@
 #include <wx/wx.h>
 
 class MainFrame;
+class ListManager;
 class List;
 
 enum Status {
