@@ -20,10 +20,14 @@ public:
 	Status getStatus() { return m_Status; }
 
 	void toggleStatus();
+	void changeTitle(wxString title);
+
 	void onToggleStatus(wxCommandEvent& evt);
+	void onClickPanel(wxCommandEvent& evt);
 	void onDelete(wxCommandEvent& evt);
 private:
 	wxButton* m_ToggleButton;
+	wxStaticText* m_TitleST;
 
 	List* m_List;
 	wxString m_Title;

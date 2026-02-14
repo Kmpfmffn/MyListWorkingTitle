@@ -18,6 +18,10 @@ public:
 	wxString getTitle() { return m_Title; }
 	std::vector<ListElement*> getElements() { return m_Elements; }
 
+	void onClickListTitle(wxCommandEvent& evt);
+
+	void changeTitle(wxString title);
+
 	bool addElement(wxString title, Status status = Status::UNDONE);
 	bool removeElement(ListElement* element);
 private:

@@ -1,5 +1,5 @@
 #VERSION(0.0.1)
-LIST(Sachen fÃ¼r Afrika)
-ELEM(Wegen Impfung fragen,0)
+LIST(Sachen für Afrika)
 ELEM(Powerbank mit Solar kaufen,0)
-ELEM(New item,0)
+ELEM(Reisepass beantragen,0)
+ELEM(Impfungen holen,0)
